@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-base-blue: #0052FF;
+    --color-base-dark: #0A0B0D;
+  }
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-base-dark);
+  }
+
+  #root {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.3);
+  }
+  
+  .glass-panel {
+    background: rgba(10, 11, 13, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 82, 255, 0.2);
+  }
+}
