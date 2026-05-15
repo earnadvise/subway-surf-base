@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import { useUserStore } from '../../store/useUserStore';
-import { Shield, Medal, Gift, Users, Trophy, ChevronRight, Lock,Zap } from 'lucide-react';
+import { Shield, Medal, Gift, Users, Trophy, ChevronRight, Lock, Zap } from 'lucide-react';
 
 interface DashboardProps {
   onPlay: () => void;
@@ -9,15 +9,15 @@ interface DashboardProps {
 
 export default function Dashboard({ onPlay }: DashboardProps) {
   const { isConnected, address } = useAccount();
-  const { 
-    builderCode, 
-    setBuilderCode, 
-    validateBuilderCode, 
+  const {
+    builderCode,
+    setBuilderCode,
+    validateBuilderCode,
     hasValidBuilderCode,
     xp,
     rank,
     referrals,
-    dailyStreak 
+    dailyStreak
   } = useUserStore();
 
   const [inputCode, setInputCode] = useState(builderCode);
@@ -31,7 +31,7 @@ export default function Dashboard({ onPlay }: DashboardProps) {
   const handleVerify = () => {
     setBuilderCode(inputCode);
     const isValid = useUserStore.getState().validateBuilderCode();
-    
+
     if (isValid) {
       setSuccess(true);
       setError('');
@@ -42,7 +42,7 @@ export default function Dashboard({ onPlay }: DashboardProps) {
   };
 
   const getRankColor = (r: string) => {
-    switch(r) {
+    switch (r) {
       case 'Bronze': return 'text-orange-400';
       case 'Silver': return 'text-gray-300';
       case 'Gold': return 'text-yellow-400';
@@ -68,27 +68,27 @@ export default function Dashboard({ onPlay }: DashboardProps) {
   return (
     <div className="flex-1 w-full h-full pt-24 pb-12 px-4 md:px-8 overflow-y-auto">
       <div className="max-w-6xl mx-auto space-y-8">
-        
+
         {/* Header section */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-gray-800 pb-6">
           <div>
             <h1 className="text-4xl font-black uppercase text-glow mb-2">Builder Hub</h1>
             <p className="text-gray-400 flex items-center font-mono text-sm">
               <Shield className="w-4 h-4 mr-2 text-base-neon" />
-              {address?.slice(0,6)}...{address?.slice(-4)}
+              {address?.slice(0, 6)}...{address?.slice(-4)}
             </p>
           </div>
-          
+
           {!hasValidBuilderCode ? (
             <div className="glass-panel p-4 rounded-xl flex items-center w-full md:w-auto max-w-md border-base-blue/30">
-              <input 
-                type="text" 
-                placeholder="Enter Builder Code..." 
+              <input
+                type="text"
+                placeholder="Enter Builder Code..."
                 value={inputCode}
                 onChange={(e) => setInputCode(e.target.value)}
                 className="bg-transparent border-none outline-none text-white flex-1 min-w-[200px]"
               />
-              <button 
+              <button
                 onClick={handleVerify}
                 className="px-4 py-2 bg-base-blue hover:bg-blue-600 rounded-lg text-sm font-bold transition-colors ml-2"
               >
@@ -96,7 +96,7 @@ export default function Dashboard({ onPlay }: DashboardProps) {
               </button>
             </div>
           ) : (
-            <button 
+            <button
               onClick={onPlay}
               className="px-8 py-3 bg-base-neon text-base-dark font-bold rounded-xl hover:bg-white transition-colors flex items-center"
             >
@@ -110,16 +110,16 @@ export default function Dashboard({ onPlay }: DashboardProps) {
 
         {/* Dashboard Grid */}
         <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 transition-opacity duration-500 ${!hasValidBuilderCode ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
-          
+
           {/* Stats Card */}
           <div className="glass-panel p-6 rounded-2xl md:col-span-2 relative overflow-hidden group">
             <div className="absolute -right-20 -top-20 w-64 h-64 bg-base-blue/10 rounded-full blur-3xl group-hover:bg-base-blue/20 transition-all"></div>
-            
+
             <h3 className="text-xl font-bold mb-6 flex items-center">
               <Medal className="w-5 h-5 mr-2 text-base-blue" />
               Progression Status
             </h3>
-            
+
             <div className="flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="flex flex-col items-center text-center">
                 <div className="w-32 h-32 rounded-full border-4 border-base-dark bg-gradient-to-br from-base-dark to-gray-800 shadow-[0_0_15px_rgba(0,240,255,0.2)] flex items-center justify-center mb-4 relative">
@@ -137,7 +137,7 @@ export default function Dashboard({ onPlay }: DashboardProps) {
                 <div className="bg-base-dark/50 p-4 rounded-xl border border-white/5">
                   <p className="text-gray-400 text-sm mb-1">Daily Streak</p>
                   <p className="text-2xl font-bold text-white flex items-center">
-                    {dailyStreak} <span className="text-orange-500 ml-2 text-sm flex items-center"><Zap className="w-4 h-4 mr-1"/></span>
+                    {dailyStreak} <span className="text-orange-500 ml-2 text-sm flex items-center"><Zap className="w-4 h-4 mr-1" /></span>
                   </p>
                 </div>
                 <div className="bg-base-dark/50 p-4 rounded-xl border border-white/5">
@@ -165,7 +165,7 @@ export default function Dashboard({ onPlay }: DashboardProps) {
               <Gift className="w-5 h-5 mr-2 text-base-purple" />
               Rewards
             </h3>
-            
+
             <div className="flex-1 flex flex-col gap-4">
               <div className="bg-gradient-to-r from-base-purple/20 to-transparent p-4 rounded-xl border border-base-purple/30 flex items-center justify-between">
                 <div>
@@ -176,7 +176,7 @@ export default function Dashboard({ onPlay }: DashboardProps) {
                   Claim
                 </button>
               </div>
-              
+
               <div className="bg-base-dark/50 p-4 rounded-xl border border-white/5 flex items-center justify-between opacity-50">
                 <div>
                   <h4 className="font-bold text-sm text-white">First Game</h4>
@@ -201,7 +201,7 @@ export default function Dashboard({ onPlay }: DashboardProps) {
               <Trophy className="w-5 h-5 mr-2 text-yellow-400" />
               Top Builders
             </h3>
-            
+
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
@@ -221,10 +221,10 @@ export default function Dashboard({ onPlay }: DashboardProps) {
                   ].map((row, i) => (
                     <tr key={i} className={`border-b border-gray-800/50 hover:bg-white/5 transition-colors ${row.r === 4 ? 'bg-base-blue/10 border-base-blue/20' : ''}`}>
                       <td className="py-4 px-4 font-mono font-bold text-gray-400">
-                        {row.r === 1 ? <span className="text-yellow-400">#1</span> : 
-                         row.r === 2 ? <span className="text-gray-300">#2</span> : 
-                         row.r === 3 ? <span className="text-orange-400">#3</span> : 
-                         `#${row.r}`}
+                        {row.r === 1 ? <span className="text-yellow-400">#1</span> :
+                          row.r === 2 ? <span className="text-gray-300">#2</span> :
+                            row.r === 3 ? <span className="text-orange-400">#3</span> :
+                              `#${row.r}`}
                       </td>
                       <td className="py-4 px-4 font-mono">{row.name}</td>
                       <td className="py-4 px-4 font-bold">{row.s.toLocaleString()}</td>
