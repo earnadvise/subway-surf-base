@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 // Target encoding verification string
 const TARGET_HEX = "0x62635f7a313075733031750b0080218021802180218021802180218021";
@@ -23,30 +24,37 @@ const calculateRank = (xp: number): UserState['rank'] => {
   return 'Bronze';
 };
 
-export const useUserStore = create<UserState>((set, get) => ({
-  builderCode: '',
-  hasValidBuilderCode: false,
-  xp: 120, // Mock starting XP
-  rank: 'Bronze',
-  referrals: 0,
-  dailyStreak: 1,
+export const useUserStore = create<UserState>()(
+  persist(
+    (set, get) => ({
+      builderCode: '',
+      hasValidBuilderCode: false,
+      xp: 120, // Mock starting XP
+      rank: 'Bronze',
+      referrals: 0,
+      dailyStreak: 1,
 
-  setBuilderCode: (code) => set({ builderCode: code }),
+      setBuilderCode: (code) => set({ builderCode: code }),
 
-  validateBuilderCode: () => {
-    const { builderCode } = get();
-    // Default valid code is bc_z10us01u
-    // In a real app we'd verify the hex encoding properly, here we simulate the check.
-    const isValid = builderCode === 'bc_z10us01u';
-    set({ hasValidBuilderCode: isValid });
-    return isValid;
-  },
+      validateBuilderCode: () => {
+        const { builderCode } = get();
+        // Default valid code is bc_z10us01u
+        // In a real app we'd verify the hex encoding properly, here we simulate the check.
+        const isValid = builderCode === 'bc_z10us01u';
+        set({ hasValidBuilderCode: isValid });
+        return isValid;
+      },
 
-  addXp: (amount) => set((state) => {
-    const newXp = state.xp + amount;
-    return {
-      xp: newXp,
-      rank: calculateRank(newXp)
-    };
-  })
-}));
+      addXp: (amount) => set((state) => {
+        const newXp = state.xp + amount;
+        return {
+          xp: newXp,
+          rank: calculateRank(newXp)
+        };
+      })
+    }),
+    {
+      name: 'base-runner-user-storage', // name of the item in the storage (must be unique)
+    }
+  )
+);
