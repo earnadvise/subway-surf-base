@@ -24,8 +24,7 @@ export default function GameCanvas() {
         position={[10, 20, 5]} 
         intensity={1.5} 
         castShadow 
-        shadow-mapSize-width={1024} 
-        shadow-mapSize-height={1024} 
+        shadow-mapSize={[1024, 1024]} 
       />
       <pointLight position={[0, 5, -20]} intensity={2} color="#00F0FF" distance={50} />
       
