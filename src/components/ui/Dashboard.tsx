@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import { useUserStore } from '../../store/useUserStore';
-import { Shield, Medal, Gift, Users, Trophy, ChevronRight, Lock } from 'lucide-react';
+import { Shield, Medal, Gift, Users, Trophy, ChevronRight, Lock,Zap } from 'lucide-react';
 
 interface DashboardProps {
   onPlay: () => void;
